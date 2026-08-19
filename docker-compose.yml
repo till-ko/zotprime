@@ -73,9 +73,10 @@ services:
       zotprime:
         ipv4_address: 10.5.5.5
   zotprime-localstack:
-    image: "uniuu/zotprime-localstack:${VER}"
+    image: "localstack/localstack:4.13.1"
     environment:
       - SERVICES=sns,sqs,apigateway
+      - GATEWAY_LISTEN=0.0.0.0:4575
     volumes:
       - /etc/localtime:/etc/localtime:ro
     networks:
@@ -183,7 +184,7 @@ services:
       zotprime:
         ipv4_address: 10.5.5.10
   zotprime-phpmyadmin:
-    image: "uniuu/zotprime-phpmyadmin:${VER}"
+    image: "arm64v8/phpmyadmin:latest"
     ports:
       - "8083:80"
     environment:

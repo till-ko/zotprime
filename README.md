@@ -1,5 +1,11 @@
 # ZotPrime2
 
+## Changes made by me
+
+Localstack changed to newer but not too new version and added old port to config, as old one was not compilable for raspberry pis arm architecture.
+now using 4.13.1 as one of the last versions not needed to have new licensing policies. but as default port changed had to make further adjustments for that in the environment for that image.
+
+
 **Self-hosted platform for Zotero**
 
 ZotPrime2 is a fully packaged repository aimed to make self-hosted [Zotero](https://www.zotero.org) deployment easier with the last versions of both Zotero client and server. This is the result of sleepless nights spent to deploy Zotero within my organization on a disconnected network. 
