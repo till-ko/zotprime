@@ -23,15 +23,25 @@ services:
     image: "uniuu/zotprime-elasticsearch:${VER}"
     mem_limit: 1024m
     mem_reservation: 1024m
+    cgroup: host
     environment:
+      - ES_USE_CGOUP_V2=true
       - cluster.name=zotero
       - xpack.security.enabled=false
       - cluster.routing.allocation.disk.threshold_enabled=false 
       - discovery.type=single-node
       - logger.level=WARN
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ES_JAVA_HOME=/usr/share/elasticsearch/jdk
+      # AWS/S3-Konfiguration für MinIO
+      - AWS_ACCESS_KEY_ID=${MINIOROOTUSER}
+      - AWS_SECRET_ACCESS_KEY=${MINIOROOTPASSWORD}
+      - AWS_DEFAULT_REGION=us-east-1
+      - S3_ENDPOINT=http://minio:9000
+      - AWS_EC2_METADATA_DISABLED=true
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
       interval: 10s
