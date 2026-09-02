@@ -5,6 +5,21 @@
 Localstack changed to newer but not too new version and added old port to config, as old one was not compilable for raspberry pis arm architecture.
 now using 4.13.1 as one of the last versions not needed to have new licensing policies. but as default port changed had to make further adjustments for that in the environment for that image.
 
+## EDIT: 
+to make attachments work change in dataserver /var/www/zotero/model/Item.inc.php
+`$mimeType = iconv("UTF-8", "ASCII", $mimeType); to not have //IGNORE to get rid of error for pdfs`
+and deactivate in line 1478 ff in Item.inc.php
+```bash
+// TEMP: MIME-Type-Prüfung deaktiviert
+/*
+if (!in_array($parentItem->attachmentContentType, ['application/pdf', 'application/epub+zip', 'text/html'])) {
+    throw new Exception(
+        "Parent item $parentItem->libraryKey of $this->annotationType annotation must be a PDF attachment",
+        Z_ERROR_INVALID_INPUT
+    );
+}
+*/
+```
 
 **Self-hosted platform for Zotero**
 
