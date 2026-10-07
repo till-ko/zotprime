@@ -21,6 +21,7 @@ services:
         ipv4_address: 10.5.5.2
   zotprime-elasticsearch:
     image: "uniuu/zotprime-elasticsearch:${VER}"
+    restart: always
     mem_limit: 1024m
     mem_reservation: 1024m
     cgroup: host
@@ -60,6 +61,7 @@ services:
         ipv4_address: 10.5.5.3
   zotprime-redis:
     image: "uniuu/zotprime-redis:${VER}"
+    restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
     healthcheck:
@@ -72,6 +74,7 @@ services:
         ipv4_address: 10.5.5.4
   zotprime-memcached:
     image: "uniuu/zotprime-memcached:${VER}"
+    restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
     healthcheck:
@@ -84,6 +87,7 @@ services:
         ipv4_address: 10.5.5.5
   zotprime-localstack:
     image: "localstack/localstack:4.13.1"
+    restart: always
     environment:
       - SERVICES=sns,sqs,apigateway
       - GATEWAY_LISTEN=0.0.0.0:4575
@@ -94,6 +98,7 @@ services:
         ipv4_address: 10.5.5.6
   zotprime-minio:
     image: "uniuu/zotprime-minio:${VER}"
+    restart: always
     environment:
       - MINIO_ROOT_USER=${MINIOROOTUSER}
       - MINIO_ROOT_PASSWORD=${MINIOROOTPASSWORD}
@@ -195,6 +200,7 @@ services:
         ipv4_address: 10.5.5.10
   zotprime-phpmyadmin:
     image: "arm64v8/phpmyadmin:latest"
+    restart: always
     ports:
       - "8083:80"
     environment:
