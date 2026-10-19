@@ -120,6 +120,10 @@ services:
         ipv4_address: 10.5.5.7
   zotprime-dataserver:
     image: "uniuu/zotprime-dataserver:${VER}"
+    pull_policy: build
+    build:
+      context: ./stack/dataserver
+      dockerfile: ds.Dockerfile
     ports:
       - "8080:8080"
     volumes:
