@@ -144,6 +144,7 @@ COPY config/header.inc.php /var/www/zotero/include/
 COPY config/Core.inc.php /var/www/zotero/include/
 COPY config/Storage.inc.php /var/www/zotero/model/
 COPY config/FullText.inc.php /var/www/zotero/model/
+COPY config/Item.inc.php /var/www/zotero/model/
 COPY config/ApiController.php /var/www/zotero/controllers/
 COPY config/AdminController.php /var/www/zotero/controllers/
 COPY config/ItemsController.php /var/www/zotero/controllers/
