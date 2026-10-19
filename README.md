@@ -5,10 +5,16 @@
 Localstack changed to newer but not too new version and added old port to config, as old one was not compilable for raspberry pis arm architecture.
 now using 4.13.1 as one of the last versions not needed to have new licensing policies. but as default port changed had to make further adjustments for that in the environment for that image.
 
-## EDIT: 
-to make attachments work change in dataserver /var/www/zotero/model/Item.inc.php
-`$mimeType = iconv("UTF-8", "ASCII", $mimeType); to not have //IGNORE to get rid of error for pdfs`
-and deactivate in line 1478 ff in Item.inc.php
+## EDIT:
+To make attachments work, two changes are applied to the dataserver's
+`/var/www/zotero/model/Item.inc.php`. These are no longer edited manually inside
+the container; instead an overridden copy is shipped in the repo and copied into
+the image at build time (`stack/dataserver/config/Item.inc.php`, via
+`COPY config/Item.inc.php /var/www/zotero/model/` in `stack/dataserver/ds.Dockerfile`):
+
+`$mimeType = iconv("UTF-8", "ASCII", $mimeType);` to not have `//IGNORE`, which
+gets rid of the error for PDFs. The MIME type check (annotation must be a PDF)
+is deactivated:
 ```bash
 // TEMP: MIME-Type-Prüfung deaktiviert
 /*
@@ -20,6 +26,11 @@ if (!in_array($parentItem->attachmentContentType, ['application/pdf', 'applicati
 }
 */
 ```
+
+The dataserver service in `docker-compose.yml` now has a local build context
+(`pull_policy: build` + `build: ./stack/dataserver`), so `./bin/install.sh` /
+`docker compose up -d` builds the patched image locally. No manual edit inside
+the running container is needed anymore.
 
 **Self-hosted platform for Zotero**
 
